@@ -1,0 +1,23 @@
+=== Consultas PostgreSQL Equivalentes - Food Store U7 ===
+
+--- [Q-PG1] Pedidos con estado CONFIRMADO (Equivalente a Q-M2) ---
+ pedido_id |   estado   |           fecha            |  total   
+-----------+------------+----------------------------+----------
+    756505 | CONFIRMADO | 2026-06-08 00:00:00-03     | 16307.74
+    756508 | CONFIRMADO | 2025-11-14 00:00:00-03     | 13052.26
+(2 filas)
+
+Q-PG1 ejecutada. Cardinalidad esperada: 2 filas (IDs: 756505, 756508).
+
+--- [Q-PG2] Pedidos que contienen el Producto 243882 (Equivalente a Q-M3) ---
+ pedido_id |   estado   | producto_id | cantidad | precio_unitario_historico | subtotal 
+-----------+------------+-------------+----------+---------------------------+----------
+    756505 | CONFIRMADO |      243882 |        2 |                   3628.43 |  7256.86
+    756506 | TERMINADO  |      243882 |        2 |                   3628.43 |  7256.86
+    756507 | PENDING    |      243882 |        2 |                   3628.43 |  7256.86
+    756508 | CONFIRMADO |      243882 |        2 |                   3628.43 |  7256.86
+(4 filas)
+
+Q-PG2 ejecutada. Cardinalidad esperada: 4 filas (IDs: 756505, 756506, 756507, 756508).
+
+=== FIN DE EJECUCIÓN - CONSULTAS POSTGRESQL COMPLETADAS ===

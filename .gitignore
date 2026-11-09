@@ -1,0 +1,18 @@
+# Archivos de entorno y credenciales
+.env
+*.env.local
+
+# Backups binarios pesados
+*.dump
+*.tar
+*.bak
+
+# Logs
+*.log
+logs/
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

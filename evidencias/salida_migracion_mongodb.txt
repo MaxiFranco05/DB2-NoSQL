@@ -1,0 +1,134 @@
+==========================================================================
+  FOOD STORE - MIGRACIÓN Y CONSULTAS DOCUMENTALES EN MONGODB (UNIDAD 7)
+==========================================================================
+
+[OK] Insertados 5 documentos de muestra en 'foodstore_nosql.pedidos'.
+
+--- [Q-M1] Todos los pedidos (identificador y estado) ---
+[
+  {
+    "pedido_id_origen": 756504,
+    "estado": "TERMINADO"
+  },
+  {
+    "pedido_id_origen": 756505,
+    "estado": "CONFIRMADO"
+  },
+  {
+    "pedido_id_origen": 756506,
+    "estado": "TERMINADO"
+  },
+  {
+    "pedido_id_origen": 756507,
+    "estado": "PENDIENTE"
+  },
+  {
+    "pedido_id_origen": 756508,
+    "estado": "CONFIRMADO"
+  }
+]
+Total recuperados Q-M1: 5 documentos (Esperado: 5).
+
+--- [Q-M2] Filtro por estado 'CONFIRMADO' ---
+[
+  {
+    "pedido_id_origen": 756505,
+    "estado": "CONFIRMADO",
+    "fecha": "2026-06-08T03:00:00.000Z",
+    "total": 16307.74
+  },
+  {
+    "pedido_id_origen": 756508,
+    "estado": "CONFIRMADO",
+    "fecha": "2025-11-14T03:00:00.000Z",
+    "total": 13052.26
+  }
+]
+Total recuperados Q-M2: 2 documentos (Esperado: 2 - IDs: [756505, 756508]).
+
+--- [Q-M3] Filtro por producto embebido en items (producto_id_origen = 243882) ---
+[
+  {
+    "pedido_id_origen": 756505,
+    "estado": "CONFIRMADO",
+    "items": [
+      {
+        "producto_id_origen": 243882,
+        "nombre": "Producto 43882",
+        "cantidad": 2,
+        "precio_unitario_historico": 3628.43,
+        "subtotal": 7256.86
+      }
+    ]
+  },
+  {
+    "pedido_id_origen": 756506,
+    "estado": "TERMINADO",
+    "items": [
+      {
+        "producto_id_origen": 243882,
+        "nombre": "Producto 43882",
+        "cantidad": 3,
+        "precio_unitario_historico": 3628.43,
+        "subtotal": 10885.29
+      }
+    ]
+  },
+  {
+    "pedido_id_origen": 756507,
+    "estado": "PENDIENTE",
+    "items": [
+      {
+        "producto_id_origen": 243882,
+        "nombre": "Producto 43882",
+        "cantidad": 3,
+        "precio_unitario_historico": 3628.43,
+        "subtotal": 10885.29
+      }
+    ]
+  },
+  {
+    "pedido_id_origen": 756508,
+    "estado": "CONFIRMADO",
+    "items": [
+      {
+        "producto_id_origen": 243882,
+        "nombre": "Producto 43882",
+        "cantidad": 2,
+        "precio_unitario_historico": 3628.43,
+        "subtotal": 7256.86
+      }
+    ]
+  }
+]
+Total recuperados Q-M3: 4 documentos (Esperado: 4 - IDs: [756505, 756506, 756507, 756508]).
+
+--- [Q-M4] Filtro por importe total superior a $15.000 ---
+[
+  {
+    "pedido_id_origen": 756506,
+    "estado": "TERMINADO",
+    "total": 18092.69
+  },
+  {
+    "pedido_id_origen": 756505,
+    "estado": "CONFIRMADO",
+    "total": 16307.74
+  },
+  {
+    "pedido_id_origen": 756507,
+    "estado": "PENDIENTE",
+    "total": 15128.05
+  }
+]
+Total recuperados Q-M4: 3 documentos (Esperado: 3 - IDs: [756506, 756505, 756507]).
+
+--- [AUDITORÍA RI-M1] Comprobación de consistencia matemática en totales ---
+✅ RI-M1 Verificada: 0 inconsistencias de precios/totales (100% de coherencia matemática).
+
+--- [AUDITORÍA RI-M2] Comprobación de atomicidad y no vaciedad de líneas ---
+✅ RI-M2 Verificada: 0 pedidos huérfanos o sin ítems (100% de documentos válidos).
+
+==========================================================================
+  FIN DE EJECUCIÓN - SCRIPT MONGODB COMPLETADO
+==========================================================================

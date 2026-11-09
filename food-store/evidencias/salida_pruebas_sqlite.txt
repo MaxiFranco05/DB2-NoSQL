@@ -1,0 +1,30 @@
+=============================================================================
+  FOOD STORE - VERIFICACIÓN DE INTEGRIDAD Y RESTRICCIONES SQLITE (STRICT)
+=============================================================================
+
+1. Carga inicial de catálogo en producto_cache: 4 productos insertados.
+
+2. Transacción atómica completada (BEGIN ... COMMIT):
+- pedido_borrador: 1 fila insertada ('550e8400-e29b-41d4-a716-446655440001')
+- item_borrador: 2 filas insertadas
+- cola_sync: 1 fila insertada ('990e8400-e29b-41d4-a716-446655440001', estado = 'PENDIENTE')
+✅ Commit verificado.
+
+3. Cancelación de transacción (ROLLBACK):
+- Intento de inserción de pedido '...440099'
+- ROLLBACK ejecutado.
+- Conteo de filas de pedido_borrador con id '...440099': 0 filas.
+✅ Rollback verificado exitosamente.
+
+4. Eliminación en cascada (ON DELETE CASCADE):
+- Eliminación de pedido_borrador ('550e8400-e29b-41d4-a716-446655440001')
+- Filas restantes en item_borrador: 0
+- Filas restantes en cola_sync: 0
+✅ Cascada verificada: los ítems y la cola se eliminan automáticamente sin dejar huérfanos.
+
+5. Validación de restricciones STRICT y CHECK:
+- Intento de insertar texto en precio_centavos: Excepción esperada 'cannot store TEXT value in INTEGER column'.
+- Intento de insertar forma_pago inválida ('BITCOIN'): Excepción esperada 'CHECK constraint failed'.
+✅ Modo STRICT y restricciones de dominio verificadas al 100%.
+
+=============================================================================

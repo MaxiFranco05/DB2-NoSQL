@@ -1,0 +1,33 @@
+=============================================================================
+  FOOD STORE - SIMULACIÓN DE EVENTOS EN SERVIDOR CENTRAL (POSTGRESQL 16+)
+=============================================================================
+
+1. Ejecución de casos_servidor.sql en PostgreSQL:
+UPDATE 1 (Producto 1: nuevo precio 4500.00)
+UPDATE 1 (Producto 3: activo = false)
+COPY 20 (v_snapshot_movil exportado exitosamente a movil/servidor_snapshot.csv)
+
+2. Verificación de regla de oro: "El móvil propone, el servidor dispone"
+Ejecución de consulta_final.sql tras correr toda la simulación en SQLite:
+
+SELECT COUNT(*) AS pedidos_nuevos_en_servidor
+FROM pedido
+WHERE fecha >= '2026-11-05 18:00:00';
+
+ pedidos_nuevos_en_servidor 
+----------------------------
+                          0
+(1 fila)
+
+3. Verificación de stock de productos en PostgreSQL:
+ id |   nombre   | precio  | stock | activo 
+----+------------+---------+-------+--------
+  1 | Producto 1 | 4500.00 |   184 | t
+  2 | Producto 2 |  766.89 |    36 | t
+  3 | Producto 3 | 3289.26 |   199 | f
+  4 | Producto 4 |  630.36 |   154 | t
+(4 filas)
+
+✅ Conclusión: Ningún borrador 'SIMULADO_APROBADO' en SQLite alteró el stock ni
+insertó pedidos en la base de datos central PostgreSQL sin sincronización formal.
+=============================================================================
