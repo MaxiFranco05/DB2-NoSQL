@@ -2,10 +2,19 @@
 
 **Asignatura:** Bases de Datos II — Tecnicatura Universitaria en Programación  
 **Proyecto:** Food Store  
+**Comisión:** C3 · **Docente:** Prof. Sergio Neira  
 **Equipo de Trabajo:**
 * **Máximo Franco**
 * **Andrés Novello**
 * **Octavio Fiore**
+
+---
+
+## 📑 Informe Técnico Integrador — Segunda Entrega (Unidades 4 a 8)
+
+El informe técnico unificado que acredita el cumplimiento de los **14 objetivos** de la entrega integrando la capa relacional, documental y móvil se encuentra disponible en:
+* 📄 **Versión PDF:** [`informe_tecnico_segunda_entrega.pdf`](informe_tecnico_segunda_entrega.pdf)
+* 📝 **Versión Markdown:** [`informe_tecnico_segunda_entrega.md`](informe_tecnico_segunda_entrega.md)
 
 ---
 
@@ -25,6 +34,7 @@
 
 ```text
 DB2-NoSQL/
+├── informe_tecnico_segunda_entrega.pdf # Informe técnico integrador oficial (Unidades 4 a 8)
 ├── informe_u7.pdf                   # Informe ejecutivo completo de la Unidad 7 compilado en PDF
 ├── modelo_documental.md             # Consignas 1, 2 y 3: Justificación de embedding vs referencing y esquema BSON
 ├── consigna5_tabla_comparativa.md   # Consigna 5: Tabla comparativa de paridad PostgreSQL vs MongoDB
