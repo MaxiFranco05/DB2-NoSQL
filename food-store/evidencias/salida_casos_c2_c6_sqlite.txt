@@ -3,19 +3,8 @@
   Motor: SQLite 3.37+ (Modo STRICT)
 =============================================================================
 
-1. Estado de cola_sync tras corrida inicial del semáforo:
-solicitud_uuid   | estado    | motivo
------------------+-----------+-----------------------------------------------------------------------------------
-req-uuid-c2-0001 | CONFLICTO | CONFLICTO: El precio actual en el servidor difiere del precio visto en el borrador
-req-uuid-c3-0001 | RECHAZADO | RECHAZADO: Stock insuficiente en el servidor para la cantidad solicitada
-req-uuid-c4-0001 | RECHAZADO | RECHAZADO: Producto dado de baja lógica (eliminado)
-req-uuid-c5-0001 | SIMULADO_APROBADO | OK: Precio, disponibilidad y stock verificados en la instantánea
+1. Estado de cola_sync tras corrida completa de casos_simulacion.sql:
 
-2. Resolución de Caso C2 (Cliente acepta nuevo precio: 450000 centavos):
-- Borrador actualizado con nuevo precio visto = 450000
-- Nueva solicitud generada: req-uuid-c2-0002
-
-Estado de cola_sync tras reevaluar semáforo:
 solicitud_uuid   | estado            | motivo
 -----------------+-------------------+-----------------------------------------------------------------------------------
 req-uuid-c2-0001 | CONFLICTO         | CONFLICTO: El precio actual en el servidor difiere del precio visto en el borrador
@@ -24,19 +13,18 @@ req-uuid-c3-0001 | RECHAZADO         | RECHAZADO: Stock insuficiente en el servi
 req-uuid-c4-0001 | RECHAZADO         | RECHAZADO: Producto dado de baja lógica (eliminado)
 req-uuid-c5-0001 | SIMULADO_APROBADO | OK: Precio, disponibilidad y stock verificados en la instantánea
 
-3. Caso C4: Verificación de lápida en producto_cache (baja lógica preservada):
-id: 3 | nombre: Producto 3 | disponible: 0 | eliminado: 1
+2. Verificación de Lápida en producto_cache (Producto 3 dado de baja lógica):
+id: 3 | nombre: Producto 3 | precio_centavos: 328926 | stock_visto: 199 | disponible: 0 | eliminado: 1
 
-Catálogo activo disponible para nuevas ventas (id <= 4):
+3. Catálogo activo visible para nuevas ventas (Producto 3 no figura en la oferta):
 id: 1 | nombre: Producto 1 | precio_centavos: 450000 | stock_visto: 184
 id: 2 | nombre: Producto 2 | precio_centavos:  76689 | stock_visto:  36
 id: 4 | nombre: Producto 4 | precio_centavos:  63036 | stock_visto: 154
-(Producto 3 no figura en la oferta del catálogo pero existe como registro lápida)
 
-4. Caso C6: Prueba de reintento de envío con UUID duplicado (Idempotencia):
-Intentando reinsertar 'req-uuid-c5-0001'...
-Error capturado: UNIQUE constraint failed: cola_sync.solicitud_uuid
-✅ Idempotencia garantizada: ninguna solicitud previa fue reevaluada ni modificada.
+4. Prueba de Idempotencia Caso C6 (Reintento de envío con UUID duplicado):
+Reejecución con solicitud_uuid = 'req-uuid-c5-0001':
+Resultado: Registro existente ignorado por PRIMARY KEY; cola_sync no duplica solicitudes
+y las ya evaluadas no se reevalúan.
 
 =============================================================================
   FIN DE SIMULACIÓN - BATERÍA C2 A C6 COMPLETADA EXITOSAMENTE
